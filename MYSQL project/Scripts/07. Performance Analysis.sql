@@ -38,8 +38,8 @@ CASE WHEN current_sales - AVG(current_sales) OVER (PARTITION by product_name) > 
 END avg_change,
 -- Year-over-year Analysis
 LAG(current_sales) OVER (PARTITION BY product_name ORDER BY order_year) prev_sales,
-CASE WHEN  LAG(current_sales) OVER (PARTITION BY product_name ORDER BY order_year) > 0 THEN "Increase"
-     WHEN LAG(current_sales) OVER (PARTITION BY product_name ORDER BY order_year) < 0 THEN "Decrease"
+CASE WHEN current_sales - LAG(current_sales) OVER (PARTITION BY product_name ORDER BY order_year) > 0 THEN "Increase"
+     WHEN current_sales - LAG(current_sales) OVER (PARTITION BY product_name ORDER BY order_year) < 0 THEN "Decrease"
      ELSE 'No Change'
 END prev_change
 
