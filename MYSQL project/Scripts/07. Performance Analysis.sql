@@ -32,15 +32,15 @@ current_sales,
 
 AVG(current_sales) OVER (PARTITION by product_name) AS avg_sales,
 current_sales - AVG(current_sales) OVER (PARTITION by product_name) as diff_avg,
-CASE WHEN current_sales - AVG(current_sales) OVER (PARTITION by product_name) > 0 THEN "Above Avg"
-     WHEN current_sales - AVG(current_sales) OVER (PARTITION by product_name) < 0 THEN "Below Avg"
+CASE WHEN current_sales - AVG(current_sales) OVER (PARTITION by product_name) > 0 THEN 'Above Avg'
+     WHEN current_sales - AVG(current_sales) OVER (PARTITION by product_name) < 0 THEN 'Below Avg'
      ELSE 'Avg'
 END avg_change,
 -- Year-over-year Analysis
 LAG(current_sales) OVER (PARTITION BY product_name ORDER BY order_year) as prev_sales,
 current_sales - LAG(current_sales) OVER (PARTITION BY product_name ORDER BY order_year) as diff_py,
-CASE WHEN current_sales - LAG(current_sales) OVER (PARTITION BY product_name ORDER BY order_year) > 0 THEN "Increase"
-     WHEN current_sales - LAG(current_sales) OVER (PARTITION BY product_name ORDER BY order_year) < 0 THEN "Decrease"
+CASE WHEN current_sales - LAG(current_sales) OVER (PARTITION BY product_name ORDER BY order_year) > 0 THEN 'Increase'
+     WHEN current_sales - LAG(current_sales) OVER (PARTITION BY product_name ORDER BY order_year) < 0 THEN 'Decrease'
      ELSE 'No Change'
 END prev_change
 
